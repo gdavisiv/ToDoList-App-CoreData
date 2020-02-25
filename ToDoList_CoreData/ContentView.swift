@@ -9,8 +9,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    //Create Property Wrappers
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(fetchRequest: ToDoItem.getAllToDoItems()) var toDoItmes:FetchedResults<ToDoItem>
+    
+    @State private var newTodoItem = ""
+    
     var body: some View {
-        Text("Hello, World!")
+        NavigationView{
+            List{
+                Section(header:Text("Whats next?")){
+                    HStack{
+                        TextField("New Item", text: self.$newTodoItem)
+                        Button(action: {
+                            
+                        }){
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.green)
+                                .imageScale(.large)
+                        }
+                    }
+                }
+                .font(.headline)
+            }
+            .navigationBarTitle(Text("My List"))
+            .navigationBarItems(trailing: EditButton())
+        }
+        
     }
 }
 
